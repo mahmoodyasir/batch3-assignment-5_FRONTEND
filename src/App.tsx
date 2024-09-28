@@ -1,12 +1,13 @@
-import { Typography } from '@mui/material'
 import './App.css'
+import { RouterProvider } from 'react-router-dom'
+import router from './Routes/Routes'
 
 function App() {
 
 
   return (
     <div>
-      <Typography className='text-4xl'>Test</Typography>
+      <RouterProvider router={router} />
     </div>
   )
 }
