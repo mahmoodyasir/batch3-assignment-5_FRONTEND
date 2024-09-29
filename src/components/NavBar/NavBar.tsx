@@ -4,9 +4,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import logo from '../../static/image/car-wash.png'
+import { useAppSelector } from "../../Redux/app/hooks";
+import { Logout } from "@mui/icons-material";
+
 
 const NavBar = () => {
 
+    const isLoggedIn = useAppSelector((state) => state.userState.isLoggedIn);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -18,6 +22,7 @@ const NavBar = () => {
         { name: "Services", url: "/services" },
         { name: "Booking", url: "/booking" },
         { name: "Login", url: "/login" },
+        ...(isLoggedIn ? [{ name: "Dashboard", url: "/dashboard" }] : []),
     ]
 
     const drawerItems = (
@@ -53,8 +58,8 @@ const NavBar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <div className="flex gap-[4rem]">
-                        <div className="flex items-center gap-4">
+                    <div className="flex gap-[4rem] w-full">
+                        <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer">
                             <img className="w-10 h-10" src={logo} alt="" />
                             <Typography className="text-2xl">Car Wash</Typography>
                         </div>
@@ -66,6 +71,10 @@ const NavBar = () => {
                                     <Button onClick={() => navigate(item?.url)} key={i} className="text-white text-lg">{item?.name}</Button>
                                 ))
                             }
+                        </div>
+
+                        <div className="ml-auto">
+                            <IconButton className="bg-red-500 text-white"><Logout /></IconButton>
                         </div>
                     </div>
 
