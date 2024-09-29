@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../app/store";
 
 type UserData = {
     _id: string,
@@ -52,6 +53,6 @@ export const userSlice = createSlice({
     }
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, setLogOut } = userSlice.actions;
 
 export default userSlice.reducer;

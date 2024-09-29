@@ -1,6 +1,6 @@
 import { Alert, Box, Button, Paper, TextField, Typography } from "@mui/material"
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../../../ApiGateways/user";
 import { useAppDispatch } from "../../../Redux/app/hooks";
 import { setUser } from '../../../Redux/features/userSlice'
@@ -9,6 +9,7 @@ const Login = () => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -16,6 +17,8 @@ const Login = () => {
     });
 
     const [errorMessage, setErrorMessage] = useState(null);
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
 
@@ -26,7 +29,7 @@ const Login = () => {
             (data) => {
                 dispatch(setUser(data?.data));
                 localStorage.setItem("access_token", data?.token);
-                navigate('/')
+                navigate(from, { replace: true })
             },
             (res) => {
                 setErrorMessage(res?.message)

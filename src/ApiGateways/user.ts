@@ -26,3 +26,26 @@ export const loginUser = async (
         handleError(err)
     }
 };
+
+
+export const getUser = (handleSuccess: (data?: any) => void, handleError: (err?: any) => void) => {
+    fetch(`${url}/api/auth/fetchUser`, {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        },
+    })
+        .then((res) => {
+            if (res.status !== 200) {
+                throw new Error('Network request failed');
+            } else {
+                return res.json();
+            }
+        })
+        .then((data) => {
+            handleSuccess(data);
+        })
+        .catch((error) => {
+            handleError(error.message);
+        });
+}

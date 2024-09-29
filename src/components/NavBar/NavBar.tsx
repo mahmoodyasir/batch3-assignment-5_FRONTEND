@@ -4,8 +4,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import logo from '../../static/image/car-wash.png'
-import { useAppSelector } from "../../Redux/app/hooks";
+import { useAppDispatch, useAppSelector } from "../../Redux/app/hooks";
 import { Logout } from "@mui/icons-material";
+import { setLogOut } from '../../Redux/features/userSlice'
 
 
 const NavBar = () => {
@@ -13,16 +14,23 @@ const NavBar = () => {
     const isLoggedIn = useAppSelector((state) => state.userState.isLoggedIn);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const toggleDrawer = (open: boolean) => {
         setDrawerOpen(open);
     };
 
+    const logOut = () => {
+        dispatch(setLogOut());
+        localStorage.setItem("access_token", '');
+        navigate('/');
+    }
+
     const navItems = [
         { name: "Services", url: "/services" },
         { name: "Booking", url: "/booking" },
-        { name: "Login", url: "/login" },
-        ...(isLoggedIn ? [{ name: "Dashboard", url: "/dashboard" }] : []),
+
+        ...(isLoggedIn ? [{ name: "Dashboard", url: "/dashboard" }] : [{ name: "Login", url: "/login" }]),
     ]
 
     const drawerItems = (
@@ -74,7 +82,7 @@ const NavBar = () => {
                         </div>
 
                         <div className="ml-auto">
-                            <IconButton className="bg-red-500 text-white"><Logout /></IconButton>
+                            <IconButton onClick={() => logOut()} className="bg-red-500 text-white"><Logout /></IconButton>
                         </div>
                     </div>
 
