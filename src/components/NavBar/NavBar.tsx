@@ -81,9 +81,12 @@ const NavBar = () => {
                             }
                         </div>
 
-                        <div className="ml-auto">
-                            <IconButton onClick={() => logOut()} className="bg-red-500 text-white"><Logout /></IconButton>
-                        </div>
+                        {
+                            isLoggedIn &&
+                            <div className="ml-auto">
+                                <IconButton onClick={() => logOut()} className="bg-red-500 text-white"><Logout /></IconButton>
+                            </div>
+                        }
                     </div>
 
                 </Toolbar>

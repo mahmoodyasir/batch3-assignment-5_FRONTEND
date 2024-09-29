@@ -3,8 +3,8 @@ import UserLayout from "../Layout/UserLayout/UserLayout";
 import Homes from "../pages/Home/Homes";
 import Login from "../pages/Home/Authentication/Login";
 import SignUp from "../pages/Home/Authentication/SignUp";
-import UserDashboard from "../pages/User/UserDashboard/UserDashboard";
 import Dashboard from "./Dashboard";
+import Services from "../pages/Services/Services";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +25,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/dashboard",
-                element: <Dashboard/>
+                element: <Dashboard />
+            },
+            {
+                path: "/services",
+                element: <Services />
             },
         ]
     }
