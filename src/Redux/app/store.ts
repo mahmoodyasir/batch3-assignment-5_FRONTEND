@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userStateReducer from '../features/userSlice';
 import serviceStateReducer from '../features/serviceSlice';
+import bookingStateReducer from '../features/selectedSlotSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
@@ -13,6 +14,7 @@ const persistConfig = {
 const reducer = combineReducers({
     userState: userStateReducer,
     serviceState: serviceStateReducer,
+    bookingState: bookingStateReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

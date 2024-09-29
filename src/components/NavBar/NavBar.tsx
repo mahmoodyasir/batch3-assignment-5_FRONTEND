@@ -27,8 +27,9 @@ const NavBar = () => {
     }
 
     const navItems = [
+        { name: "Home", url: "/" },
         { name: "Services", url: "/services" },
-        { name: "Booking", url: "/booking" },
+        // { name: "Booking", url: "/booking" },
 
         ...(isLoggedIn ? [{ name: "Dashboard", url: "/dashboard" }] : [{ name: "Login", url: "/login" }]),
     ]

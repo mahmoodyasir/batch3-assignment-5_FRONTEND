@@ -4,10 +4,8 @@ import { useEffect, useState } from "react";
 import { getUser } from "../ApiGateways/user";
 import { setLogOut, setUser } from "../Redux/features/userSlice";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import UserDashboard from "../pages/User/UserDashboard/UserDashboard";
-import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
 
-const Dashboard = () => {
+const BeAuthorized = ({ children }: any) => {
 
     const dispatch = useAppDispatch();
     const location = useLocation();
@@ -15,7 +13,6 @@ const Dashboard = () => {
     const [userLoaded, setUserLoaded] = useState(false);
     const [userData, setUserData] = useState<any>(null);
     const [fetchError, setFetchError] = useState<string | null>(null);
-    const [role, setRole] = useState(null);
 
 
     useEffect(() => {
@@ -25,7 +22,6 @@ const Dashboard = () => {
                     localStorage.setItem("access_token", data?.token);
                     dispatch(setUser(data?.data));
                     setUserData(data);
-                    setRole(data?.data?.role);
                 }
 
                 setUserLoaded(true);
@@ -67,19 +63,7 @@ const Dashboard = () => {
     }
 
 
-    return (
-        <>
-            {
-                role === 'user' &&
-                <UserDashboard />
-            }
-
-            {
-                role === 'admin' &&
-                <AdminDashboard />
-            }
-        </>
-    )
+    return children;
 }
 
-export default Dashboard
+export default BeAuthorized;

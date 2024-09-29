@@ -142,12 +142,13 @@ const Services = () => {
 
                 <Grid container spacing={4} justifyContent="center" alignItems="center">
                     {serviceState?.map((service) => (
-                        <Grid item key={service._id} xs={12} sm={6} md={4} lg={3}>
+                        <Grid item key={service?._id} xs={12} sm={6} md={4} lg={3}>
                             <ServiceCard
-                                name={service.name}
-                                description={service.description}
-                                price={service.price}
-                                duration={service.duration}
+                                _id={service?._id}
+                                name={service?.name}
+                                description={service?.description}
+                                price={service?.price}
+                                duration={service?.duration}
                             />
                         </Grid>
                     ))}

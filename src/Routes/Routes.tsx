@@ -5,6 +5,9 @@ import Login from "../pages/Home/Authentication/Login";
 import SignUp from "../pages/Home/Authentication/SignUp";
 import Dashboard from "./Dashboard";
 import Services from "../pages/Services/Services";
+import ServiceDetails from "../pages/ServiceDetails/ServiceDetails";
+import BeAuthorized from "./BeAuthorized";
+import Booking from "../pages/Booking/Booking";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +33,14 @@ const router = createBrowserRouter([
             {
                 path: "/services",
                 element: <Services />
+            },
+            {
+                path: "/service_details/:id",
+                element: <ServiceDetails />
+            },
+            {
+                path: "/booking",
+                element: <BeAuthorized><Booking /></BeAuthorized>
             },
         ]
     }

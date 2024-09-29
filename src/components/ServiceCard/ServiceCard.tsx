@@ -1,6 +1,8 @@
 import { Card, CardContent, Typography, Button, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface ServiceCardProps {
+    _id: string;
     name: string;
     description: string;
     price: number;
@@ -9,7 +11,10 @@ interface ServiceCardProps {
 
 const ServiceCard: React.FC<ServiceCardProps> = (props: ServiceCardProps) => {
 
-    const { name, description, price, duration } = props;
+    const { _id, name, description, price, duration } = props;
+
+    const navigate = useNavigate();
+
     return (
         <Card className="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-xl">
             <CardContent>
@@ -17,7 +22,7 @@ const ServiceCard: React.FC<ServiceCardProps> = (props: ServiceCardProps) => {
                     {name}
                 </Typography>
                 <Typography variant="body2" className="text-gray-600 mb-4">
-                    {description}
+                    {description.substring(0, 20) + ' ...'}
                 </Typography>
                 <Box className="flex justify-between items-center mt-4">
                     <Typography variant="h6" className="text-green-600 font-semibold">
@@ -32,6 +37,7 @@ const ServiceCard: React.FC<ServiceCardProps> = (props: ServiceCardProps) => {
                     color="primary"
                     fullWidth
                     className="mt-6 bg-indigo-600 hover:bg-indigo-800 text-white rounded-lg"
+                    onClick={() => navigate(`/service_details/${_id}`)}
                 >
                     See Details
                 </Button>
