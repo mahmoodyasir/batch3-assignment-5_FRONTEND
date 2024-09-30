@@ -10,7 +10,7 @@ import {
 
 type Props = {
     columns: Record<string, { width: number }>;
-    data: JSX.Element[];
+    data: any;
 };
 
 function GenericTable(props: Props) {

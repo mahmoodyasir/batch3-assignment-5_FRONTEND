@@ -10,6 +10,8 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { useState } from "react";
 import './AdminDashboard.css'
 import ServiceControl from "../ServiceControl/ServiceControl";
+import SlotControl from "../SlotControl/SlotControl";
+import UserBookings from "./UserBookings/UserBookings";
 
 
 type AdminSideBarProps = {
@@ -20,13 +22,13 @@ type AdminSideBarProps = {
 
 const AdminSideBar = (props: AdminSideBarProps) => {
 
-    const { selectedOption, setSelectedOption, setToogle } = props;
+    const { setSelectedOption, setToogle } = props;
 
 
     const sidebarOptions = [
         { label: 'Service Mangement', icon: <HomeRepairServiceIcon /> },
         { label: 'Slot Mangement', icon: <ManageHistoryIcon /> },
-        { label: 'View User', icon: <AccountCircleIcon /> },
+        { label: 'View User Bookings', icon: <AccountCircleIcon /> },
         { label: 'User Management', icon: <ManageAccountsIcon /> },
     ];
 
@@ -96,6 +98,8 @@ const AdminDashboard = () => {
 
                 <div className="w-full h-screen">
                     {selectedOption === 'Service Mangement' && <ServiceControl />}
+                    {selectedOption === 'Slot Mangement' && <SlotControl />}
+                    {selectedOption === 'View User Bookings' && <UserBookings />}
                 </div>
 
 

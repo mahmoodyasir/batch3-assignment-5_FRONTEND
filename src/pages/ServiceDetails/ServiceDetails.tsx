@@ -140,15 +140,15 @@ const ServiceDetails = () => {
                                     <div
                                         key={slot._id}
                                         className={`flex justify-between items-center p-4 border rounded-lg 
-                                      ${slot.isBooked === "booked" ? 'bg-gray-300 cursor-not-allowed' : 'bg-white hover:bg-gray-100 cursor-pointer'} 
+                                      ${slot.isBooked === "available" ? 'bg-white hover:bg-gray-100 cursor-pointer' : 'bg-gray-300 cursor-not-allowed'} 
                                       ${selectedSlot?._id === slot._id ? 'border-blue-500' : 'border-transparent'}`}
-                                        onClick={slot.isBooked === "booked" ? undefined : () => handleSlotSelection(slot)}
+                                        onClick={slot.isBooked === "available" ? () => handleSlotSelection(slot) : undefined}
                                         aria-disabled={slot.isBooked === "booked"}
                                     >
                                         <div>
                                             <p className="font-semibold">{`${slot.startTime} - ${slot.endTime}`}</p>
-                                            <p className={`text-sm ${slot.isBooked === "booked" ? 'text-red-500' : 'text-green-500'}`}>
-                                                {slot.isBooked === "booked" ? "Booked" : "Available"}
+                                            <p className={`text-sm ${slot.isBooked === "available" ? 'text-green-500' : 'text-red-500'}`}>
+                                                {slot?.isBooked === "booked" ? "Booked" : slot?.isBooked}
                                             </p>
                                         </div>
                                     </div>
