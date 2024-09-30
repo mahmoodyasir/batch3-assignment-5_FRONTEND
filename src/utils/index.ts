@@ -1,3 +1,13 @@
+export type ServiceData = {
+    _id?: string,
+    name: string,
+    description: string,
+    price: number,
+    duration: number,
+    isDeleted?: boolean,
+}
+
+
 export const calculateTimeLeft = (date: string, startTime: string) => {
     const eventTime = new Date(`${date}T${startTime}`).getTime();
     const currentTime = new Date().getTime();

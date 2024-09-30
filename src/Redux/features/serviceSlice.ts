@@ -1,13 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type ServiceData = {
-    _id: string,
-    name: string,
-    description: string,
-    price: number,
-    duration: number,
-    isDeleted: boolean,
-}
+import { ServiceData } from "../../utils";
 
 const initialState: ServiceData[] = [];
 
