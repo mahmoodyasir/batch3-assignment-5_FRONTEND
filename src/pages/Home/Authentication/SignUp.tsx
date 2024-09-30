@@ -1,6 +1,7 @@
-import { Box, Button, Paper, TextField, Typography } from "@mui/material"
+import { Alert, Box, Button, Paper, TextField, Typography } from "@mui/material"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createUser } from "../../../ApiGateways/user";
 
 const SignUp = () => {
 
@@ -11,8 +12,12 @@ const SignUp = () => {
         email: "",
         password: "",
         phone: "",
-        address: ""
+        address: "",
+        role: "user"
     });
+
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
@@ -20,6 +25,23 @@ const SignUp = () => {
             [e.target.name]: e.target.value,
         });
     };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+        e.preventDefault();
+        setErrorMessage(null);
+        setSuccessMessage('');
+
+        createUser(formData,
+            (data) => {
+                setSuccessMessage("User Registered Successfully. Please go to Login Route to Login")
+            },
+            (res) => {
+                setErrorMessage(res?.message)
+            }
+        )
+
+    }
 
 
     return (
@@ -30,10 +52,8 @@ const SignUp = () => {
                         Sign Up
                     </Typography>
 
-                    {/* {errorMessage && <Alert severity="error" className="mb-4">{errorMessage}</Alert>}
-                    {successMessage && <Alert severity="success" className="mb-4">{successMessage}</Alert>} */}
 
-                    <form onSubmit={() => { }} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                         <TextField
                             fullWidth
                             label="Name"
@@ -86,6 +106,10 @@ const SignUp = () => {
                             variant="outlined"
                             className="bg-white rounded"
                         />
+
+                        {errorMessage && <Alert severity="error" className="mb-4">{errorMessage}</Alert>}
+                        {successMessage && <Alert severity="success" className="mb-4">{successMessage}</Alert>}
+
                         <Button
                             fullWidth
                             variant="contained"

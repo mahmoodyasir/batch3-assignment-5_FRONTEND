@@ -2,7 +2,7 @@ import { Card, CardContent, Typography, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 interface ServiceCardProps {
-    _id: string;
+    _id: string | undefined;
     name: string;
     description: string;
     price: number;

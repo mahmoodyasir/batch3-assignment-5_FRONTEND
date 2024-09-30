@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppBar, Toolbar, Button, IconButton, Drawer, List, ListItem, ListItemText, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -7,12 +7,16 @@ import logo from '../../static/image/car-wash.png'
 import { useAppDispatch, useAppSelector } from "../../Redux/app/hooks";
 import { Logout } from "@mui/icons-material";
 import { setLogOut } from '../../Redux/features/userSlice'
+import { getMyBookings } from "../../ApiGateways/booking";
 
 
 const NavBar = () => {
 
     const isLoggedIn = useAppSelector((state) => state.userState.isLoggedIn);
+    const userState = useAppSelector((state) => state.userState);
+
     const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const [recentBooking, setRecentBooking] = useState(null);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
@@ -51,6 +55,22 @@ const NavBar = () => {
             </List>
         </div>
     );
+
+
+    useEffect(() => {
+        getMyBookings(
+            (data) => {
+
+                const sortedBookings = data?.data?.sort(
+                    (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+                setRecentBooking(sortedBookings[0]);
+            },
+            (res) => console.log(res)
+        )
+    }, [])
+
+    console.log(recentBooking)
 
     return (
         <>
