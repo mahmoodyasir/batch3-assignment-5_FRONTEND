@@ -26,3 +26,27 @@ export const bookingService = async (
         handleError(err)
     }
 };
+
+export const getMyBookings = async (
+    handleSuccess: (data?: any) => void,
+    handleError: (err?: any) => void
+) => {
+
+    try {
+        const response = await fetch(`${url}/api/my-bookings`,
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                },
+
+            });
+
+        const jsonData = await response.json();
+        if (response.status === 200) handleSuccess(jsonData);
+        else handleError(jsonData);
+    }
+    catch (err) {
+        handleError(err)
+    }
+};

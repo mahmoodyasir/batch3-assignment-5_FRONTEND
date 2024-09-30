@@ -1,0 +1,23 @@
+.headToolbar {
+    @apply bg-white h-screen rounded-lg !important;
+}
+
+.toolBar {
+    @apply ml-auto block md:hidden !important;
+}
+
+.parentList {
+    @apply hover:cursor-pointer !important;
+}
+
+.childList {
+    @apply hover:bg-gray-300 flex justify-center mb-2 mx-2 py-2 px-2 !important;
+}
+
+.listIcon {
+    @apply text-violet-500 !important;
+}
+
+.listLabel {
+    @apply ml-3 !important;
+}
