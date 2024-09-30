@@ -1,9 +1,14 @@
+import ReviewHome from "../ReviewSection/ReviewHome"
 import Hero from "./Hero/Hero"
 
 const Homes = () => {
+
+
+
   return (
     <div>
-      <Hero/>
+      <Hero />
+      <ReviewHome />
     </div>
   )
 }

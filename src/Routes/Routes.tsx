@@ -9,6 +9,7 @@ import ServiceDetails from "../pages/ServiceDetails/ServiceDetails";
 import BeAuthorized from "./BeAuthorized";
 import Booking from "../pages/Booking/Booking";
 import SuccessPage from "../pages/SuccessPage/SuccessPage";
+import ReviewSection from "../pages/ReviewSection/ReviewSection";
 
 const router = createBrowserRouter([
     {
@@ -45,7 +46,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/payment/:slug",
-                element: <SuccessPage/>
+                element: <SuccessPage />
+            },
+            {
+                path: "/review",
+                element: <ReviewSection />
             },
         ]
     }
