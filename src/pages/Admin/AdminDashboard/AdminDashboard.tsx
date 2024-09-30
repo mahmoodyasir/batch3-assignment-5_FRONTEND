@@ -12,6 +12,7 @@ import './AdminDashboard.css'
 import ServiceControl from "../ServiceControl/ServiceControl";
 import SlotControl from "../SlotControl/SlotControl";
 import UserBookings from "./UserBookings/UserBookings";
+import UserControl from "../UserControl/UserControl";
 
 
 type AdminSideBarProps = {
@@ -100,6 +101,7 @@ const AdminDashboard = () => {
                     {selectedOption === 'Service Mangement' && <ServiceControl />}
                     {selectedOption === 'Slot Mangement' && <SlotControl />}
                     {selectedOption === 'View User Bookings' && <UserBookings />}
+                    {selectedOption === 'User Management' && <UserControl />}
                 </div>
 
 
