@@ -63,6 +63,7 @@ const UserBookings = (props: TUpcomingBookings) => {
                                 <Typography className="text-gray-500 mb-4">
                                     <span className="font-semibold">Price:</span> ${price.toFixed(2)}
                                 </Typography>
+                                <CountdownTimer date={bookingDate} startTime={startTime} />
                             </CardContent>
                         </Card>
                     )
