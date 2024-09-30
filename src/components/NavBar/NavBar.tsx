@@ -13,7 +13,7 @@ import { getMyBookings } from "../../ApiGateways/booking";
 const NavBar = () => {
 
     const isLoggedIn = useAppSelector((state) => state.userState.isLoggedIn);
-    const userState = useAppSelector((state) => state.userState);
+    const userEmail = useAppSelector((state) => state.userState.user.email);
 
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [recentBooking, setRecentBooking] = useState(null);
@@ -58,19 +58,27 @@ const NavBar = () => {
 
 
     useEffect(() => {
-        getMyBookings(
-            (data) => {
+        if (userEmail) {
+            getMyBookings(
+                (data) => {
 
-                const sortedBookings = data?.data?.sort(
-                    (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                );
-                setRecentBooking(sortedBookings[0]);
-            },
-            (res) => console.log(res)
-        )
-    }, [])
+                    const filteredBookings = data?.data?.filter(
+                        (booking: any) => booking.customer.email === userEmail 
+                    );
 
-    console.log(recentBooking)
+                    console.log(filteredBookings)
+
+                    const sortedBookings = filteredBookings?.sort(
+                        (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                    );
+                    setRecentBooking(sortedBookings[0]);
+                },
+                (res) => console.log(res)
+            )
+        }
+    }, [userEmail])
+
+    
 
     return (
         <>
