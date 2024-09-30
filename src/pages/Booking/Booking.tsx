@@ -9,25 +9,39 @@ import {
     Paper,
     Divider,
     InputAdornment,
-    IconButton
+    IconButton,
+    Alert
 } from "@mui/material";
 import { useAppSelector } from "../../Redux/app/hooks";
 import { Edit as EditIcon } from "@mui/icons-material";
+import { bookingService } from "../../ApiGateways/booking";
 
-
+type TBookingData = {
+    serviceId: string;
+    slotId: string;
+    vehicleType: string;
+    vehicleBrand: string;
+    vehicleModel: string;
+    manufacturingYear: null | number;
+    registrationPlate: string;
+}
 
 
 const Booking = () => {
     const bookingState = useAppSelector((state) => state.bookingState);
-    const { date, startTime, endTime, name, price, duration } = bookingState || {};
+    const { serviceId, slotId, date, startTime, endTime, name, price, duration } = bookingState || {};
 
-    const [bookingData, setBookingData] = useState({
+    const [bookingData, setBookingData] = useState<TBookingData>({
+        serviceId: serviceId,
+        slotId: slotId,
         vehicleType: "",
         vehicleBrand: "",
         vehicleModel: "",
-        manufacturingYear: 0,
+        manufacturingYear: null,
         registrationPlate: ""
     });
+
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const vehicleTypes = ['car', 'truck', 'SUV', 'van', 'motorcycle', 'bus', 'electricVehicle', 'hybridVehicle', 'bicycle', 'tractor'];
 
@@ -38,9 +52,20 @@ const Booking = () => {
         });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: any) => {
 
-        console.log(bookingData);
+        e.preventDefault();
+
+        setErrorMessage(null);
+
+        bookingService(bookingData,
+            (data) => {
+                window.location.replace(data?.data?.GatewayPageURL);
+            },
+            (res) => {
+                setErrorMessage(res?.err?.issues[0]?.message)
+            }
+        )
     };
 
     return (
@@ -149,11 +174,16 @@ const Booking = () => {
 
                                 <Grid item xs={12}>
                                     <TextField
-                                        label="Manufacturing Year"
+                                        label="Manufacturing Year (YYYY)"
                                         name="manufacturingYear"
                                         type="number"
                                         value={bookingData.manufacturingYear}
-                                        onChange={handleChange}
+                                        onChange={(e) => {
+                                            setBookingData({
+                                                ...bookingData,
+                                                manufacturingYear: Number(e.target.value)
+                                            })
+                                        }}
                                         fullWidth
                                         variant="outlined"
                                         required
@@ -192,6 +222,8 @@ const Booking = () => {
                                     />
                                 </Grid>
                             </Grid>
+
+                            {errorMessage && <Alert severity="error" className="mt-4">{errorMessage}</Alert>}
 
                             <Box mt={4}>
                                 <Button
