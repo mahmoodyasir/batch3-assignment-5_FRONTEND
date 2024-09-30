@@ -60,8 +60,6 @@ const ServiceDetails = () => {
     };
 
     const proceedToBook = () => {
-        const serviceId = selectedSlot?.service;
-        const slotId = selectedSlot?._id;
 
         const bookingData = {
             serviceId: selectedSlot?.service || "",

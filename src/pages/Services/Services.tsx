@@ -90,7 +90,7 @@ const Services = () => {
                         <Typography gutterBottom>Price Range: ${filters.minPrice} - ${filters.maxPrice}</Typography>
                         <Slider
                             value={[filters.minPrice, filters.maxPrice]}
-                            onChange={(event, newValue) => {
+                            onChange={(_event, newValue) => {
                                 if (Array.isArray(newValue)) {
                                     handleFilterChange("minPrice", newValue[0]);
                                     handleFilterChange("maxPrice", newValue[1]);
@@ -110,7 +110,7 @@ const Services = () => {
                         <Typography gutterBottom>Duration: {filters.minDuration} - {filters.maxDuration} mins</Typography>
                         <Slider
                             value={[filters.minDuration, filters.maxDuration]}
-                            onChange={(event, newValue) => {
+                            onChange={(_event, newValue) => {
                                 if (Array.isArray(newValue)) {
                                     handleFilterChange("minDuration", newValue[0]);
                                     handleFilterChange("maxDuration", newValue[1]);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Toolbar, Drawer, List, ListItem, ListItemText, Box, IconButton, Typography } from '@mui/material';
+import { Toolbar, Drawer, List, ListItemText, Box, IconButton, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import EventNoteIcon from '@mui/icons-material/EventNote';
@@ -18,7 +18,7 @@ type SideBarProps = {
 
 const SideBar = (props: SideBarProps) => {
 
-  const { selectedOption, setSelectedOption, setToogle } = props;
+  const { setSelectedOption, setToogle } = props;
 
 
   const sidebarOptions = [
@@ -125,7 +125,7 @@ const UserDashboard = () => {
             </div>}
           {selectedOption === 'Upcoming Bookings' &&
             <div className='flex flex-col gap-3'>
-               <Typography className='text-3xl text-violet-500'>Upcoming Bookings</Typography>
+              <Typography className='text-3xl text-violet-500'>Upcoming Bookings</Typography>
               {
                 myBookings?.map((item: any, i: number) => (
                   <UserBookings
@@ -141,7 +141,7 @@ const UserDashboard = () => {
                 ))
               }
             </div>
-            }
+          }
         </Box>
       </div>
     </div>

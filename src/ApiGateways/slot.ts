@@ -50,3 +50,31 @@ export const updateSlotStatus = async (
         handleError(err)
     }
 };
+
+
+
+export const createSlot = async (
+    body: any,
+    handleSuccess: (data?: any) => void,
+    handleError: (err?: any) => void
+) => {
+
+    try {
+        const response = await fetch(`${url}/api/services/slots`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                },
+                body: JSON.stringify(body)
+            });
+
+        const jsonData = await response.json();
+        if (response.status === 200) handleSuccess(jsonData);
+        else handleError(jsonData);
+    }
+    catch (err) {
+        handleError(err)
+    }
+};

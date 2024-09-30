@@ -33,7 +33,7 @@ const SignUp = () => {
         setSuccessMessage('');
 
         createUser(formData,
-            (data) => {
+            (_data) => {
                 setSuccessMessage("User Registered Successfully. Please go to Login Route to Login")
             },
             (res) => {

@@ -1,12 +1,49 @@
 import { useEffect, useState } from "react"
-import { getAvailableSlots, updateSlotStatus } from "../../../ApiGateways/slot";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TableCell, TableRow, Typography } from "@mui/material";
+import { createSlot, getAvailableSlots, updateSlotStatus } from "../../../ApiGateways/slot";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TableCell, TableRow, TextField, Typography } from "@mui/material";
 import GenericTable from "../../../components/GenericTable/GenericTable";
+import { SlotFormData } from "../../../utils";
+import { getServices } from "../../../ApiGateways/service";
+import './SlotControl.css'
 
 
 const SlotControl = () => {
 
     const [allSlot, setAllSlot] = useState<any[]>([]);
+
+    const [formData, setFormData] = useState<SlotFormData>({
+        service: "",
+        date: "",
+        startTime: "",
+        endTime: "",
+    });
+
+    const [services, setServices] = useState<any[]>([])
+
+    const [open, setOpen] = useState(false);
+
+    const [reset, setReset] = useState(false);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+
+        createSlot(formData,
+            (data) => {
+                // const response = data?.data;
+                // setAllSlot([...response, ...allSlot]);
+
+                setReset(!reset);
+
+                setOpen(false);
+            },
+            (res) => console.log(res)
+        )
+    };
 
     const columns = {
         "Service Name": { width: 50 },
@@ -21,6 +58,24 @@ const SlotControl = () => {
         getAvailableSlots(
             (data) => {
                 setAllSlot(data?.data)
+            },
+            (res) => console.log(res)
+        )
+    }, [reset]);
+
+    const filter = {
+        search: "",
+        minPrice: null,
+        maxPrice: null,
+        minDuration: null,
+        maxDuration: null,
+        sortBy: ""
+    }
+
+    useEffect(() => {
+        getServices(filter,
+            (data) => {
+                setServices(data?.data);
             },
             (res) => console.log(res)
         )
@@ -96,6 +151,79 @@ const SlotControl = () => {
     return (
         <div className="mt-4">
 
+            <article>
+                <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+                    <DialogTitle>Create Slot</DialogTitle>
+                    <DialogContent>
+                        <form className="parent_dialog" onSubmit={handleSubmit}>
+                            {/* Service Field */}
+                            <TextField
+                                select
+                                label="Service"
+                                name="service"
+                                value={formData.service}
+                                onChange={handleInputChange}
+                                fullWidth
+                                required
+                            >
+                                {services.map((service) => (
+                                    <MenuItem key={service._id} value={service._id}>
+                                        {service.name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+
+                            {/* Date Field */}
+                            <TextField
+                                label="Date"
+                                name="date"
+                                type="date"
+                                value={formData.date}
+                                onChange={handleInputChange}
+                                InputLabelProps={{ shrink: true }}
+                                fullWidth
+                                required
+                            />
+
+                            {/* Start Time Field */}
+                            <TextField
+                                label="Start Time"
+                                name="startTime"
+                                type="time"
+                                value={formData.startTime}
+                                onChange={handleInputChange}
+                                InputLabelProps={{ shrink: true }}
+                                fullWidth
+                                required
+                            />
+
+                            {/* End Time Field */}
+                            <TextField
+                                label="End Time"
+                                name="endTime"
+                                type="time"
+                                value={formData.endTime}
+                                onChange={handleInputChange}
+                                InputLabelProps={{ shrink: true }}
+                                fullWidth
+                                required
+                            />
+                        </form>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setOpen(false)} color="secondary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleSubmit} color="primary">
+                            Submit
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </article>
+
+            <div>
+                <Button className="bg-green-400 mx-2 my-3 text-white" onClick={() => setOpen(true)}>Create Slot</Button>
+            </div>
             <div>
                 <GenericTable
                     columns={columns}

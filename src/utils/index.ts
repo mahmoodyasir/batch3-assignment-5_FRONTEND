@@ -7,6 +7,13 @@ export type ServiceData = {
     isDeleted?: boolean,
 }
 
+export type SlotFormData = {
+    service: string;
+    date: string;
+    startTime: string;
+    endTime: string;
+}
+
 
 export const calculateTimeLeft = (date: string, startTime: string) => {
     const eventTime = new Date(`${date}T${startTime}`).getTime();

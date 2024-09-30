@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AppBar, Toolbar, Button, IconButton, Drawer, List, ListItem, ListItemText, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -7,16 +7,16 @@ import logo from '../../static/image/car-wash.png'
 import { useAppDispatch, useAppSelector } from "../../Redux/app/hooks";
 import { Logout } from "@mui/icons-material";
 import { setLogOut } from '../../Redux/features/userSlice'
-import { getMyBookings } from "../../ApiGateways/booking";
+// import { getMyBookings } from "../../ApiGateways/booking";
 
 
 const NavBar = () => {
 
     const isLoggedIn = useAppSelector((state) => state.userState.isLoggedIn);
-    const userEmail = useAppSelector((state) => state.userState.user.email);
+    // const userEmail = useAppSelector((state) => state.userState.user.email);
 
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [recentBooking, setRecentBooking] = useState(null);
+    // const [recentBooking, setRecentBooking] = useState(null);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
@@ -57,28 +57,28 @@ const NavBar = () => {
     );
 
 
-    useEffect(() => {
-        if (userEmail) {
-            getMyBookings(
-                (data) => {
+    // useEffect(() => {
+    //     if (userEmail) {
+    //         getMyBookings(
+    //             (data) => {
 
-                    const filteredBookings = data?.data?.filter(
-                        (booking: any) => booking.customer.email === userEmail 
-                    );
+    //                 const filteredBookings = data?.data?.filter(
+    //                     (booking: any) => booking.customer.email === userEmail 
+    //                 );
 
-                    console.log(filteredBookings)
+    //                 console.log(filteredBookings)
 
-                    const sortedBookings = filteredBookings?.sort(
-                        (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                    );
-                    setRecentBooking(sortedBookings[0]);
-                },
-                (res) => console.log(res)
-            )
-        }
-    }, [userEmail])
+    //                 const sortedBookings = filteredBookings?.sort(
+    //                     (a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    //                 );
+    //                 setRecentBooking(sortedBookings[0]);
+    //             },
+    //             (res) => console.log(res)
+    //         )
+    //     }
+    // }, [userEmail])
 
-    
+
 
     return (
         <>

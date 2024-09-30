@@ -97,7 +97,7 @@ const AdminDashboard = () => {
                 </div>
 
 
-                <div className="w-full h-screen">
+                <div className="w-full ">
                     {selectedOption === 'Service Mangement' && <ServiceControl />}
                     {selectedOption === 'Slot Mangement' && <SlotControl />}
                     {selectedOption === 'View User Bookings' && <UserBookings />}
